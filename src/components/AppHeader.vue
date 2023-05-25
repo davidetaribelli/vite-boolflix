@@ -16,6 +16,10 @@ export default {
             axios.get(`https://api.themoviedb.org/3/search/movie?api_key=aeb9f466c19d1b6c563187701f212a3e&query=${this.searchFor}`).then(r => {
                 this.store.film = r.data.results;
             })
+
+            axios.get(`https://api.themoviedb.org/3/search/tv?api_key=aeb9f466c19d1b6c563187701f212a3e&query=${this.searchFor}`).then(r => {
+                this.store.serieTv = r.data.results;
+            })
         },
 
     },

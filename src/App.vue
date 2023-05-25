@@ -18,7 +18,11 @@ export default {
   mounted() {
     axios.get(this.store.urlApi).then(films => {
       this.store.film = films.data.results
-      console.log(this.store.film)
+    })
+
+    axios.get(this.store.urlApiSerie).then(serie => {
+      this.store.serieTv = serie.data.results
+      console.log(this.store.serieTv)
     })
   }
 }
