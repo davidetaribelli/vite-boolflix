@@ -17,16 +17,16 @@ export default {
     <main>
         <div class="films">
             <div class="film" v-for="element, i in store.film">
-                <h3>{{ element.title }}</h3>
-                <h4>{{ element.original_title }}</h4>
-                <h5>{{ element.original_language }}</h5>
-                <h5>{{ element.vote_average }}</h5>
+                <h3>Titolo:{{ element.title }}</h3>
+                <h4>Titolo originale:{{ element.original_title }}</h4>
+                <h5 class="fi fi-gb fis"></h5>
+                <h5>Voto:{{ element.vote_average }}</h5>
             </div>
             <div class="serie" v-for="element, i in store.serieTv">
-                <h3>{{ element.name }}</h3>
-                <h4>{{ element.original_name }}</h4>
+                <h3>Titolo:{{ element.name }}</h3>
+                <h4>Titolo originale:{{ element.original_name }}</h4>
                 <h5>{{ element.original_language }}</h5>
-                <h5>{{ element.vote_average }}</h5>
+                <h5>Voto:{{ element.vote_average }}</h5>
             </div>
         </div>
 
@@ -50,7 +50,7 @@ main {
         .serie {
             width: calc(100% / 8);
             min-height: 300px;
-            background-color: blue;
+
         }
     }
 }
