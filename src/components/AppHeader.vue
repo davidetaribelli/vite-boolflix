@@ -1,11 +1,72 @@
 <script>
 import axios from 'axios';
+import { store } from '../data/store'
 
 export default {
     name: "AppHeader",
+
+    data() {
+        return {
+            store,
+            searchFor: ""
+        }
+    },
+    methods: {
+        research() {
+            axios.get(`https://api.themoviedb.org/3/search/movie?api_key=aeb9f466c19d1b6c563187701f212a3e&query=${this.searchFor}`).then(r => {
+                this.store.film = r.data.results;
+            })
+        },
+
+    },
+
 }
 </script>
 
-<template></template>
+<template>
+    <header>
+        <div class="box">
+            <h1>BOOLFLIX</h1>
+            <div class="search">
+                <input type="text" placeholder="Search..." v-model="searchFor">
+                <button @click="research">SEARCH</button>
+            </div>
+        </div>
+    </header>
+</template>
 
-<style scoped lang="scss"></style>
+
+<style scoped lang="scss">
+@use '../style/general.scss' as *;
+
+header {
+    padding: 1em;
+    border: 1px solid white;
+    background-color: #222;
+
+    .box {
+        @include flex(row, space-between, center, wrap);
+
+        h1 {
+            color: red;
+        }
+
+        .search {
+            padding: 0.5em;
+
+            input,
+            button {
+                padding: 0.5em;
+                border: 0;
+            }
+
+            button {
+                cursor: pointer;
+            }
+        }
+
+    }
+
+
+}
+</style>
