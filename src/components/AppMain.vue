@@ -9,6 +9,15 @@ export default {
             store,
         }
     },
+    methods: {
+        getFlag(lang) {
+            if (lang == 'en') {
+                return 'fi fi-gb'
+            }
+            return 'fi fi-' + lang
+        },
+
+    }
 
 }
 </script>
@@ -19,13 +28,13 @@ export default {
             <div class="film" v-for="element, i in store.film">
                 <h3>Titolo:{{ element.title }}</h3>
                 <h4>Titolo originale:{{ element.original_title }}</h4>
-                <h5 class="fi fi-gb fis"></h5>
+                <h5 :class="getFlag(element.original_language)"></h5>
                 <h5>Voto:{{ element.vote_average }}</h5>
             </div>
             <div class="serie" v-for="element, i in store.serieTv">
                 <h3>Titolo:{{ element.name }}</h3>
                 <h4>Titolo originale:{{ element.original_name }}</h4>
-                <h5>{{ element.original_language }}</h5>
+                <h5 :class="getFlag(element.original_language)"></h5>
                 <h5>Voto:{{ element.vote_average }}</h5>
             </div>
         </div>
@@ -50,7 +59,7 @@ main {
         .serie {
             width: calc(100% / 8);
             min-height: 300px;
-
+            background-color: blue;
         }
     }
 }
