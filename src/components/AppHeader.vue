@@ -34,7 +34,7 @@ export default {
         <div class="box">
             <h1>BOOLFLIX</h1>
             <div class="search">
-                <input type="text" placeholder="Search..." v-model="searchFor">
+                <input type="text" placeholder="Search..." v-model="searchFor" @keyup.enter="research">
                 <button @click="research">SEARCH</button>
             </div>
         </div>
@@ -47,7 +47,6 @@ export default {
 
 header {
     padding: 1em;
-    border: 1px solid white;
     background-color: #222;
 
     .box {

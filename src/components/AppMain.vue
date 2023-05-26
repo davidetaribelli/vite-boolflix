@@ -1,6 +1,7 @@
 <script>
-import axios from 'axios';
 import { store } from '../data/store'
+import "/node_modules/flag-icons/css/flag-icons.min.css";
+
 
 export default {
     name: "AppMain",
@@ -13,12 +14,18 @@ export default {
         getFlag(language) {
             if (language == 'en') {
                 return 'fi fi-gb';
+            } else if (language == 'zh' || language == 'id' || language == 'ja') {
+                return 'fi fi-un';
             }
             return 'fi fi-' + language;
         },
         getPoster(img) {
             let urlPath = "https://image.tmdb.org/t/p/w342/" + img;
             return urlPath;
+        },
+        stars(vote) {
+            const stars = Math.ceil(vote / 2);
+            return stars
         }
 
     }
@@ -28,29 +35,51 @@ export default {
 
 <template>
     <main>
+
         <div class="films">
+            <!-- PARTE CHE RIGUARDA I FILM -->
             <div class="film" v-for="element, i in store.film">
                 <img v-show="(element.backdrop_path != null)" :src="getPoster(element.backdrop_path)" :alt="element.title">
-                <p v-show="(element.backdrop_path == null)">IMAGE NON EXIST</p>
+                <img v-show="(element.backdrop_path == null)"
+                    src="https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled.png" />
                 <div class="info">
                     <h4>Titolo:{{ element.title }}</h4>
                     <h5>Titolo originale:{{ element.original_title }}</h5>
-                    <h6 :class="getFlag(element.original_language)"></h6>
-                    <h4>Voto: <i class="fa-solid fa-star"></i></h4>
+                    <h4 :class="getFlag(element.original_language)"></h4>
+                    <div v-if="element.vote_average > 0" class="stars">
+                        <span>Voto:</span>
+                        <span v-for="star in stars(element.vote_average)">
+                            <font-awesome-icon icon="fa-solid fa-star" class="icon" />
+                        </span>
+                    </div>
+                    <div v-else>
+                        <span>Voto: n/a</span>
+                    </div>
                     <small>Overview: {{ element.overview.slice(0, 150) }}[...]</small>
                 </div>
             </div>
+            <!-- PARTE CHE RIGUARDA LE SERIE TV -->
             <div class="serie" v-for="element, i in store.serieTv">
                 <img v-show="(element.backdrop_path != null)" :src="getPoster(element.backdrop_path)" :alt="element.name">
-                <p v-show="(element.backdrop_path == null)">IMAGE NON EXIST</p>
+                <img v-show="(element.backdrop_path == null)"
+                    src="https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled.png" />
                 <div class="info">
                     <h3>Titolo:{{ element.name }}</h3>
                     <h5>Titolo originale:{{ element.original_name }}</h5>
-                    <h6 :class="getFlag(element.original_language)"></h6>
-                    <h4>Voto: <i class="fa-solid fa-star"></i></h4>
-                    <small>{{ element.overview }}</small>
+                    <h4 :class="getFlag(element.original_language)"></h4>
+                    <div v-if="element.vote_average > 0" class="stars">
+                        <span>Voto:</span>
+                        <span v-for="star in stars(element.vote_average)">
+                            <font-awesome-icon icon="fa-solid fa-star" class="icon" />
+                        </span>
+                    </div>
+                    <div v-else>
+                        <span>Voto: n/a</span>
+                    </div>
+                    <small>Overview: {{ element.overview.slice(0, 150) }}[...]</small>
                 </div>
             </div>
+
         </div>
 
     </main>
@@ -61,23 +90,23 @@ export default {
 
 
 main {
-    text-align: center;
     margin: 0 auto;
 
     .films {
         @include flex(row, start, center, wrap);
         color: white;
-        gap: 1em;
         width: 100%;
-
-
 
         .film,
         .serie {
-            @include flex(row, center, center, wrap);
-            width: calc(100% / 6);
-            height: 350px;
+
+            width: calc(100% / 5);
+            height: 375px;
             color: white;
+
+            &:hover {
+                border: 2px solid #ccc;
+            }
 
             &:hover img {
                 display: none;
@@ -96,14 +125,18 @@ main {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: top;
+            display: block;
         }
 
         .info {
-            display: flex;
-            justify-content: flex-start;
             display: none;
-            overflow-y: scroll;
+            padding: 1em;
+
+            .stars {
+                .icon {
+                    color: goldenrod;
+                }
+            }
         }
 
     }
