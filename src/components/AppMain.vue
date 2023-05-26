@@ -14,7 +14,7 @@ export default {
         getFlag(language) {
             if (language == 'en') {
                 return 'fi fi-gb';
-            } else if (language == 'zh' || language == 'id' || language == 'ja') {
+            } else if (language == 'zh' || language == 'id' || language == 'ja' || language == 'ko') {
                 return 'fi fi-un';
             }
             return 'fi fi-' + language;
@@ -100,8 +100,8 @@ main {
         .film,
         .serie {
 
-            width: calc(100% / 5);
-            height: 375px;
+            width: calc(100% / 6);
+            height: 300px;
             color: white;
 
             &:hover {

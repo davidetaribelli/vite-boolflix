@@ -22,6 +22,8 @@ export default {
                 this.store.serieTv = r.data.results;
                 console.log("SerieTV", this.store.serieTv)
             })
+
+            this.searchFor = null;
         },
 
     },
