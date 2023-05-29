@@ -22,12 +22,7 @@ export default {
         getPoster(img) {
             let urlPath = "https://image.tmdb.org/t/p/w342/" + img;
             return urlPath;
-        },
-        stars(vote) {
-            const stars = Math.ceil(vote / 2);
-            return stars
         }
-
     }
 
 }
@@ -48,9 +43,14 @@ export default {
                     <h4 :class="getFlag(element.original_language)"></h4>
                     <div v-if="element.vote_average > 0" class="stars">
                         <span>Voto:</span>
-                        <span v-for="star in stars(element.vote_average)">
-                            <font-awesome-icon icon="fa-solid fa-star" class="icon" />
-                        </span>
+                        <template v-for="star in 5">
+                            <span v-if="Math.ceil(element.vote_average / 2) >= star">
+                                <font-awesome-icon icon="fa-solid fa-star" class="icon" />
+                            </span>
+                            <span v-else>
+                                <font-awesome-icon icon="fa-solid fa-star" class="icon empty" />
+                            </span>
+                        </template>
                     </div>
                     <div v-else>
                         <span>Voto: n/a</span>
@@ -69,9 +69,14 @@ export default {
                     <h4 :class="getFlag(element.original_language)"></h4>
                     <div v-if="element.vote_average > 0" class="stars">
                         <span>Voto:</span>
-                        <span v-for="star in stars(element.vote_average)">
-                            <font-awesome-icon icon="fa-solid fa-star" class="icon" />
-                        </span>
+                        <template v-for="star in 5">
+                            <span v-if="Math.ceil(element.vote_average / 2) >= star">
+                                <font-awesome-icon icon="fa-solid fa-star" class="icon" />
+                            </span>
+                            <span v-else>
+                                <font-awesome-icon icon="fa-solid fa-star" class="icon empty" />
+                            </span>
+                        </template>
                     </div>
                     <div v-else>
                         <span>Voto: n/a</span>
@@ -135,6 +140,10 @@ main {
             .stars {
                 .icon {
                     color: goldenrod;
+                }
+
+                .empty {
+                    color: #ccc;
                 }
             }
         }
